@@ -99,9 +99,9 @@ app_config:
 
           server {
                   listen       80 default_server;
-                  server_name  "~^www.*";
+                  server_name  "";
                   location / {return 302 https://amazon.com; }
-                  location /google/ { proxy_pass https://google.com/;  }
-                  location /freshcells/ { proxy_pass https://freshcells.de/; }
+                  location /google { proxy_pass https://google.com/;  }
+                  location /freshcells { proxy_pass https://freshcells.de/; }
           }
       }
