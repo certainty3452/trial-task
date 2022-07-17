@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "trial-task.configName" . }}
+  labels:
+    {{- include "trial-task.labels" . | nindent 4 }}
+{{- if .Values.app_config.annotations }}
+  annotations:
+{{ toYaml .Values.app_config.annotations | indent 4 }}
+{{- end }}
+data: 
+{{- if .Values.app_config.entries }}
+{{ toYaml .Values.app_config.entries | indent 2 }}
+{{- end }}
