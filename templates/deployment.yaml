@@ -30,14 +30,6 @@ spec:
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
-        {{- if (.Values.app_config) }}
-          - name: {{ include "trial-task.configName" . }}
-            configMap:
-              name: {{ include "trial-task.configName" . }}
-              items:
-                - key: nginx.conf
-                  path: nginx.conf
-        {{- end }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -55,15 +47,9 @@ spec:
           readinessProbe:
             tcpSocket:
               port: http
-          {{- with .Values.volumeMounts}}
+         {{- with .Values.volumeMounts}}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-            {{- if (.Values.app_config) }}
-            - name: {{ include "trial-task.configName" . }}
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
-              readOnly: true
-            {{- end }}
+            {{- toYaml . | nindent 12}}
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
